@@ -1,0 +1,18 @@
+name: Retag and push latest to registry
+description: Re-tags image:sha to image:latest and pushes it back to the registry
+inputs:
+  image:
+    description: The image to retag and push
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Pull current SHA
+      run: docker pull ${{ inputs.image }}:${{ github.sha }}
+      shell: bash
+    - name: Retag as latest
+      run: docker tag ${{ inputs.image }}:${{ github.sha }} ${{ inputs.image }}:latest
+      shell: bash
+    - name: Push latest
+      run: docker push ${{ env.CI_REGISTRY_IMAGE }}:latest
+      shell: bash
