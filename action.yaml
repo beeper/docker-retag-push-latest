@@ -14,5 +14,5 @@ runs:
       run: docker tag ${{ inputs.image }}:${{ github.sha }} ${{ inputs.image }}:latest
       shell: bash
     - name: Push latest
-      run: docker push ${{ env.CI_REGISTRY_IMAGE }}:latest
+      run: docker push ${{ inputs.image }}:latest
       shell: bash
